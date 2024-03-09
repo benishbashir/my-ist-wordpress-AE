@@ -1,0 +1,58 @@
+1)
+gcloud sql instances create tutorial-sql-instance \
+    --activation-policy=ALWAYS \
+    --tier=db-n1-standard-1 \
+    --region=us-central1
+
+2)
+gcloud sql users set-password root --instance tutorial-sql-instance \
+    --password *ROOTPASSWORD* \
+    --host %
+
+3)
+gcloud sql databases create wordpressdatabase --instance tutorial-sql-instance
+
+results:
+Creating Cloud SQL database...done.                                                                                  
+Created database [wordpressdatabase].
+instance: tutorial-sql-instance
+name: wordpressdatabase
+project: decisive-talon-414807
+
+4)
+composer require google/cloud-tools
+# additional done
+There was a warning so did add steps:
+sudo apt-get install php-protobuf
+extension=protobuf.so
+#
+5) sudo apt-get install php7.4-zip php7.4-curl
+yes
+
+6)
+php vendor/bin/wp-gae
+7)
+ php vendor/bin/wp-gae create >enter>y
+got error for zp ext
+#
+sudo apt-get install php-zip >y
+extension=zip.so
+# Again ran 6 and 7 commands: success now that is#
+php vendor/bin/wp-gae
+php vendor/bin/wp-gae create >enter>y
+Using db_region us-central1
+Please enter project_id (required): decisive-talon-414807
+Please enter db_instance (required): tutorial-sql-instance
+Please enter db_name (required):  wordpressdatabase
+Please enter db_user (defaults to 'root'): 
+Please enter db_password (required): *ROOTPASSWORD*
+Do you want to use the same db user and password for local run? (Y/n)y
+
+8)gcloud sql instances describe tutorial-sql-instance | grep region
+results: region: us-central1
+9)cd my-wordpress-project
+10)gcloud app deploy app.yaml cron.yaml > y
+# it gave error that bucket has not been created:
+# gcloud beta app repair
+
+11) gcloud app deploy app.yaml cron.yaml
